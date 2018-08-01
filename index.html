@@ -1,0 +1,173 @@
+<html>
+<head>
+  <title>Tic-Tac-Toe</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-reboot.min.css"> -->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <!-- <script type="text/javascript" src="assets/js/ttt.js"></script> -->
+
+  <meta charset="ISO-8859-1">
+
+</head>
+<body>
+  <!-- <h1>Tic Tac Toe</h1> -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+
+        <!-- <table id="table" class="table table-bordered text-center tableStyle"> -->
+        <table id="table">
+          <caption>Tic-Tac-Toe</caption>
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td id="id0"></td>
+              <td id="id1"></td>
+              <td id="id2"></td>
+            </tr>
+            <tr>
+              <td id="id3"></td>
+              <td id="id4"></td>
+              <td id="id5"></td>
+            </tr>
+            <tr>
+              <td id="id6"></td>
+              <td id="id7"></td>
+              <td id="id8"></td>
+            </tr>
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+
+        <p id="board"></p>
+        <button id="reset">Reset</button>
+        <button id="reset">&#10006;</button>
+        <button id="reset">&#9760;</button>
+        <button id="reset">&#10010;</button>
+
+<script type="text/javascript">
+
+var boardSetup = function() {
+  var setListeners = [];
+  for ( var i = 0; i < 9; i++ ) {
+    setListeners.push('var id' + i + ' = document.getElementById("' + i + '");');
+    setListeners.push('id' + i + '.addEventListener( "click", changeXO );');
+  }
+  for ( var listener of setListeners ) { eval( listener ); }
+}
+// boardSetup();
+
+
+var X = x = "X", O = o = "O";
+var x_start_patternCnt = 0;
+var x_start_pattern = [ x, o, x, o, x, o, x, o, x ];
+// var x_start_pattern = [ 1,2,3,4,5,6,7,8,9 ];
+
+var recordTurn = function(id) {
+  if ( board[id] == "" ) {
+    board[id] = x_start_pattern[x_start_patternCnt];
+    x_start_patternCnt = (x_start_patternCnt + 1) % x_start_pattern.length;
+  } else {
+    alert("Cell taken, pick another spot.");
+  }
+}
+
+var changeXO = function(e) {
+  var id = e.target.id;
+  recordTurn(id);
+  e.target.textContent = board[id];
+}
+
+var id0, id1, id2, id3, id4, id5, id6, id7, id8;
+var board = { id0 : "",
+              id1 : "",
+              id2 : "",
+              id3 : "",
+              id4 : "",
+              id5 : "",
+              id6 : "",
+              id7 : "",
+              id8 : "" }
+
+// board = Array(9).fill(""),
+// window.addEventListener( "load", function() {
+// });
+var initBoard = function() {
+  id0 = document.getElementById("id0");
+  id1 = document.getElementById("id1");
+  id2 = document.getElementById("id2");
+  id3 = document.getElementById("id3");
+  id4 = document.getElementById("id4");
+  id5 = document.getElementById("id5");
+  id6 = document.getElementById("id6");
+  id7 = document.getElementById("id7");
+  id8 = document.getElementById("id8");
+        document.getElementById("board").textContent = console.log(board);
+}
+initBoard();
+
+id0.textContent = board.id0
+id1.textContent = board.id1
+id2.textContent = board.id2
+id3.textContent = board.id3
+id4.textContent = board.id4
+id5.textContent = board.id5
+id6.textContent = board.id6
+id7.textContent = board.id7
+id8.textContent = board.id8
+
+id0.addEventListener( "click", changeXO );
+id1.addEventListener( "click", changeXO );
+id2.addEventListener( "click", changeXO );
+id3.addEventListener( "click", changeXO );
+id4.addEventListener( "click", changeXO );
+id5.addEventListener( "click", changeXO );
+id6.addEventListener( "click", changeXO );
+id7.addEventListener( "click", changeXO );
+id8.addEventListener( "click", changeXO );
+
+
+// var id0 = document.getElementById("0");
+// var id1 = document.getElementById("1");
+// var id2 = document.getElementById("2");
+// var id3 = document.getElementById("3");
+// var id4 = document.getElementById("4");
+// var id5 = document.getElementById("5");
+// var id6 = document.getElementById("6");
+// var id7 = document.getElementById("7");
+// var id8 = document.getElementById("8");
+
+
+// id0.addEventListener( "click", function(e) {
+    // var idInfo = e.target.data;
+    // var collection = [];
+    // collection = collection.push(e.type);
+    // var idInfo = collection.toString();
+//     var idInfo = e.type;
+//     demo.innerText = idInfo;
+// } )
+
+// var setListeners = [];
+// for ( var i = 0; i < 9; i++ ) {
+//   setListeners.push('var id' + i + ' = document.getElementById("' + i + '");');
+//   setListeners.push('id' + i + '.addEventListener("click", function() {' + 'id' + i + '.innerHTML = changeXO();' + '},);');
+// }
+// for ( var listener of setListeners ) { eval( listener ); }
+
+
+function changeBackgroundColor() {
+  var colors = [ "red", "blue", "yellow", "white", "green", "pink", "aqua", "orange", "purple"];
+  var colorsCnt = 0;
+  document.addEventListener("click", function(){
+    document.body.style.backgroundColor = colors[colorsCnt];
+    colorsCnt = (colorsCnt+1) % colors.length;
+  });
+}
+// changeBackgroundColor();
+
+</script>
+
+      </div><!-- .col-md-6 -->
+    </div><!-- .row -->
+  </div><!-- .container -->
+</html>
