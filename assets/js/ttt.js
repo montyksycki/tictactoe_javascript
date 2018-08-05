@@ -1,13 +1,13 @@
 // Tic-Tac-Toe
 
-var TicTacToe = (function(){
+var TicTacToeGame = (function(){
 
-  var TicTacToe = function() {
-      this.x            = "x",
-      this.o            = "o",
-      this.board        = Array(9).fill(""),
+  var tttInit = function() {
+      this.x            = "x";
+      this.o            = "o";
+      this.board        = new Array(9).fill("");
       this.win          = [["x","x","x"],
-                           ["o","o","o"]],
+                           ["o","o","o"]];
       this.wins         = [[0,1,2],
                            [3,4,5],
                            [6,7,8],
@@ -15,7 +15,7 @@ var TicTacToe = (function(){
                            [1,4,7],
                            [2,5,8],
                            [0,4,8],
-                           [2,4,6]],
+                           [2,4,6]];
   }
 
   TicTacToe.prototype = {
@@ -26,7 +26,7 @@ var TicTacToe = (function(){
 
   var listenerSetup = function() {
     var setListeners = [];
-    for ( var i = 0; i < 9; i++ ) {
+    for ( i = 0; i < 9; i++ ) {
       setListeners.push('var id' + i + ' = document.getElementById("' + i + '");');
       setListeners.push('id' + i + '.addEventListener("click", function() {' + 'id' + i + '.innerHTML = changeXO();' + '},);');
     }
@@ -58,7 +58,3 @@ var TicTacToe = (function(){
 // function displayMark(objId) {
 //   objId.innerHTML = "<h1>X</h1>";
 // }
-
-
- 
-
