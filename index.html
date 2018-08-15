@@ -54,7 +54,7 @@
 //     setListeners.push('id'+i+'.addEventListener( "click", changeCell );');
 //   }
 //   for ( var listener of setListeners ) { eval( listener ); }
-// }
+// }();
 // initBoard();
 
 // var x_start_pattern = [ 1,2,3,4,5,6,7,8,9 ];
@@ -69,11 +69,7 @@ var selectCell = function() {
 }
 
 var recordCell = function(id, setValue) {
-  if ( board[id] == "" ) {
     board[id] = setValue;
-  } else {
-    alert("Cell taken, select another spot.");
-  }
 }
 
 var tallyWins = function(id, setValue) {
@@ -87,11 +83,17 @@ var tallyWins = function(id, setValue) {
 }
 
 var changeCell = function(e) {
-  var id = e.target.id;
-  var setValue = selectCell();
-  recordCell(id, setValue);
-  tallyWins(id, setValue);
-  e.target.textContent = board[id];
+  if ( e.target.textContent != "" ) {
+    alert("Cell taken, pick another cell.")
+  } else {
+    var id = e.target.id;
+    var setValue = selectCell();
+    recordCell(id, setValue);
+    tallyWins(id, setValue);
+    // e.target.textContent = tallyWinsBoard[id][cellID];
+    e.target.textContent = board[id];
+    // evalTheBoard(tallyWinsBoard);
+  }
 }
 
 var id0, id1, id2, id3, id4, id5, id6, id7, id8;
@@ -116,53 +118,65 @@ var tallyWinsBoard = [
   { id2 : "", id4 : "", id6 : "" }
 ];
 
-console.log(board);
-console.log(tallyWinsBoard);
+var evalTheBoard = function(tallyWinsBoard) {
+  for ( var i = 0; i < 8; i++ ) {
+    var y = Object.entries(tallyWinsBoard[i]);
+    evalWin(y);
+    // console.log(y);
+  }
+}
 
-var xWin = ['X','X','X'];
-var oWin = ['O','O','O'];
+var evalWin = function( y ) {
+  this.y = y;
+  // console.log(y);
+  var a = y[0][1];
+  var b = y[1][1];
+  var c = y[2][1];
+    if ( a,b,c == 'X' ) {
+    console.log("X, YOU WIN!!!");
+  } else if ( a,b,c == 'O' ) {
+    console.log("O, YOU WIN!!!");
+  } else {
+    console.log("No other options.")
+  }
+}
 
-// var checkForWin = function( xWin ) {
-//   for ( var i = 0; i < tallyWinsBoard.length; i++ ) {
-//     for (  )
-//   }
+// evalTheBoard(tallyWinsBoard);
+
+
+// var evalBoard = funciton() {
+
 // }
-
-
-// for ( var i = 0; i < tallyWinsBoard.length; i++ ) {
-//   for ( var [key, value] of Object.entries(tallyWinsBoard[i]) ) {
+//     console.log( tallyWinsBoard[i]);
 //     console.log( tallyWinsBoard[i] + '['  + key + ' : ' + value + ']' );
+//   for ( var [key, value] of Object.entries(tallyWinsBoard[i]) ) {
+//   }
+
+// var checkForWin = function() {
+//   for ( var i = 0; i < tallyWinsBoard.length; i++ ) {
+
 //   }
 // }
 
-
 // for ( var i = 0; i < tallyWinsBoard.length; i++ ) {
-//   for ( var cell of Object.values(tallyWinsBoard[i]) ) {
+//   for ( var cellID in tallyWinsBoard[i] ) {
+//     if ( tallyWinsBoard[i][cellID] == tallyWinsBoard[i][cellID] == tallyWinsBoard[i][cellID] ) {
+//       console.log("win");
+//     }
 //   }
 // }
 
 // for ( let i = 0; i < tallyWinsBoard.length; i++ ) {
 //   for ( let key in tallyWinsBoard[i] ) {
 //     if ( tallyWinsBoard[i].hasOwnProperty(key) ) {
-//       console.log(tallyWinsBoard[i][key]);
+//       console.log(tallyWinsBoard[i][key] == );
 //     }
 //   }
 // }
 
 // console.log(Object.entries(tallyWinsBoard));
 
-
-// var a = ['X','X','X'];
-// var b = ['X','X','X'];
-// a = b;
-// a == b;
-
 // var checkForWin = function() {}
-
-
-
-
-
 
 // console.log(Object.entries(tallyWins[i]));
 // console.log(cellID + ' : ' + tallyWins[i][cellID]);
@@ -180,7 +194,7 @@ var oWin = ['O','O','O'];
 
 // window.addEventListener( "load", function() {
 // });
-// 
+
 
 
 
@@ -197,7 +211,6 @@ var initBoard = function() {
   id8 = document.getElementById("id8");
 }
 initBoard();
-
 
   id0.addEventListener( "click", changeCell );
   id1.addEventListener( "click", changeCell );
