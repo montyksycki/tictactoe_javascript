@@ -92,7 +92,7 @@ var changeCell = function(e) {
     tallyWins(id, setValue);
     // e.target.textContent = tallyWinsBoard[id][cellID];
     e.target.textContent = board[id];
-    // evalTheBoard(tallyWinsBoard);
+    evalTheBoard(tallyWinsBoard);
   }
 }
 
@@ -141,63 +141,10 @@ var evalWin = function( y ) {
   }
 }
 
-// evalTheBoard(tallyWinsBoard);
-
-
-// var evalBoard = funciton() {
-
-// }
-//     console.log( tallyWinsBoard[i]);
-//     console.log( tallyWinsBoard[i] + '['  + key + ' : ' + value + ']' );
-//   for ( var [key, value] of Object.entries(tallyWinsBoard[i]) ) {
-//   }
-
-// var checkForWin = function() {
-//   for ( var i = 0; i < tallyWinsBoard.length; i++ ) {
-
-//   }
-// }
-
-// for ( var i = 0; i < tallyWinsBoard.length; i++ ) {
-//   for ( var cellID in tallyWinsBoard[i] ) {
-//     if ( tallyWinsBoard[i][cellID] == tallyWinsBoard[i][cellID] == tallyWinsBoard[i][cellID] ) {
-//       console.log("win");
-//     }
-//   }
-// }
-
-// for ( let i = 0; i < tallyWinsBoard.length; i++ ) {
-//   for ( let key in tallyWinsBoard[i] ) {
-//     if ( tallyWinsBoard[i].hasOwnProperty(key) ) {
-//       console.log(tallyWinsBoard[i][key] == );
-//     }
-//   }
-// }
-
-// console.log(Object.entries(tallyWinsBoard));
-
-// var checkForWin = function() {}
-
-// console.log(Object.entries(tallyWins[i]));
-// console.log(cellID + ' : ' + tallyWins[i][cellID]);
-// console.log(cellID);
-
-// for ( let i = 0; i < tallyWinsBoard.length; i++ ) {
-//   console.log(tallyWinsBoard[i]);
-// }
-
-// for ( let i = 0; i < tallyWins.length; i++ ) {
-//   for ( let [key, value] of Object.entries(tallyWins[i]) ) {
-//     console.log( key + ' : ' + value );
-//   }
-// }
+evalTheBoard(tallyWinsBoard);
 
 // window.addEventListener( "load", function() {
 // });
-
-
-
-
 
 var initBoard = function() {
   id0 = document.getElementById("id0");
@@ -222,32 +169,7 @@ initBoard();
   id7.addEventListener( "click", changeCell );
   id8.addEventListener( "click", changeCell );
 
-// document.getElementById("board").textContent = boardObj();
-// var boardObj = function() {
-//   for ( let [cell, value] of Object.enties(board) ) {
-//     console.log(cell ' + ' value);
-//   }
-// }
 
-// id0.textContent = board.id0
-// id1.textContent = board.id1
-// id2.textContent = board.id2
-// id3.textContent = board.id3
-// id4.textContent = board.id4
-// id5.textContent = board.id5
-// id6.textContent = board.id6
-// id7.textContent = board.id7
-// id8.textContent = board.id8
-
-
-// id0.addEventListener( "click", function(e) {
-    // var idInfo = e.target.data;
-    // var collection = [];
-    // collection = collection.push(e.type);
-    // var idInfo = collection.toString();
-//     var idInfo = e.type;
-//     demo.innerText = idInfo;
-// } )
 
 // var setListeners = [];
 // for ( var i = 0; i < 9; i++ ) {
