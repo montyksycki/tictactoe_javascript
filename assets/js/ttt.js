@@ -99,6 +99,13 @@ var changeWinCellBGColor = function(y) {
 var doCellsMatch = function(cell, y) {
   return y[0][1] == cell && y[1][1] == cell && y[2][1] == cell;
 }
+
+var allCellsTaken = function() {
+  for ( cell in board ) {
+    cell
+
+  }
+}
   
 var evalWin = function( y ) {
   if ( doCellsMatch(x, y) ) {
