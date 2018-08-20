@@ -11,7 +11,7 @@
 
 var X = x = "X", O = o = "O";
 var x_start_patternCnt = 0;
-var x_start_pattern = [ o, x ];
+var x_start_pattern = [ x, o ];
 var id0, id1, id2, id3, id4, id5, id6, id7, id8;
 var board = { id0 : "",
               id1 : "",
@@ -48,7 +48,6 @@ var initBoard = function() {
 }
 initBoard();
 
-
 var changeCell = function(e) {
   if ( e.target.textContent != "" ) {
     alert("Box taken, pick another box.")
@@ -73,7 +72,7 @@ var recordCell = function(id, setValue) {
 }
 
 var tallyWins = function(id, setValue) {
-  for ( var i = 0; i < tallyWinsBoard.length; i++ ) {
+  for ( i = 0; i < 8; i++ ) {
     for ( var cellID in tallyWinsBoard[i] ) {
       if ( cellID == id ){
         tallyWinsBoard[i][cellID] = setValue;
@@ -89,30 +88,25 @@ var evalTheBoard = function(tallyWinsBoard) {
   }
 }
 
-// var things = [ id0, id2, id3, id7 ];
-// for ( i = 0; i < 4; i++ ) {
-//   thing = things[i];
-//   console.log(thing);
-//   thing.style.backgroundColor = "yellow";
-// }
+var changeWinCellBGColor = function(y) {
+  console.log( y[0][1] + " YOU WIN!!! ");
+  winAlert.textContent = y[0][1] + " You WIN!!!";
+  for ( i = 0; i <= 2; i++ ) {
+    document.getElementById(y[i][0]).style.backgroundColor = "orange";
+  }
+}
 
-  
+var doCellsMatch = function(cell, y) {
+  return y[0][1] == cell && y[1][1] == cell && y[2][1] == cell;
+}
   
 var evalWin = function( y ) {
-    if ( y[0][1] == "X" && y[1][1] == "X" && y[2][1] == "X" ) {
-      console.log("\"X\", YOU WIN!!! ");
-      winAlert.textContent = "\"X\", YOU WIN!!!";
-      document.getElementById(y[0][0]).style.backgroundColor = "orange";
-      document.getElementById(y[1][0]).style.backgroundColor = "orange";
-      document.getElementById(y[2][0]).style.backgroundColor = "orange";
-  } else if ( y[0][1] == "O" && y[1][1] == "O" && y[2][1] == "O" ) {
-      document.getElementById(y[0][0]).style.backgroundColor = "orange";
-      document.getElementById(y[1][0]).style.backgroundColor = "orange";
-      document.getElementById(y[2][0]).style.backgroundColor = "orange";
-      console.log("\"O\", YOU WIN!!! ");
-      winAlert.textContent = "\"O\", YOU WIN!!!";
+  if ( doCellsMatch(x, y) ) {
+    changeWinCellBGColor(y);
+  } else if ( doCellsMatch(o, y) ) {
+    changeWinCellBGColor(y);
   } else {
-      winAlert.textContent = "No Available Wins";
+      // winAlert.textContent = "No Available Wins";
     // console.log("No other options. " + a + b + c)
   }
 }
