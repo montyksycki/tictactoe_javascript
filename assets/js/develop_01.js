@@ -1,3 +1,65 @@
+var GO = "GAME OVER!!!";
+var X = x = "X", O = o = "O";
+var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
+var i = 0;
+
+var game_over = function(cell) {
+  console.log( '"' + cell + '"' + ', It\'s your turn!' );
+  console.log( i );
+}
+
+var x_turn = function(cell) {
+  console.log( '"' + cell + '"' + ', It\'s your turn!' );
+  console.log( i );
+  // start_game();
+  i++;
+}
+
+var o_turn = function(cell) {
+  console.log( '"' + cell + '"' + ', It\'s your turn!' );
+  console.log( i );
+  // start_game();
+  i++;
+}
+
+var start_game = function(game_turns) {
+  var cell = game_turns[i];
+  if ( cell == GO ) {
+    game_over( cell );
+  } else if ( cell == x ) {
+    x_turn( cell );
+  } else if ( cell == o ) {
+    o_turn( cell );
+  }
+}
+
+start_game(game_turns);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var x = "X";
 var o = "O";
 var win_patterns_for_machine = [];
@@ -16,14 +78,14 @@ var id_cells_available_for_machine_play  = [];
 // ];
 
 var tallyWinPatternsBoard = [
-  {id0: "X", id1: "O", id2: "X"},
-  {id3: "X", id4: "O", id5: ""},
+  {id0: "O", id1: "", id2: ""},
+  {id3: "", id4: "X", id5: ""},
   {id6: "", id7: "", id8: ""},
-  {id0: "X", id3: "X", id6: ""},
-  {id1: "O", id4: "O", id7: ""},
-  {id2: "X", id5: "", id8: ""},
-  {id0: "X", id4: "O", id8: ""},
-  {id2: "X", id4: "O", id6: ""}
+  {id0: "O", id3: "", id6: ""},
+  {id1: "", id4: "X", id7: ""},
+  {id2: "", id5: "", id8: ""},
+  {id0: "O", id4: "X", id8: ""},
+  {id2: "", id4: "X", id6: ""}
 ];
 
 var beginPlay = function() {

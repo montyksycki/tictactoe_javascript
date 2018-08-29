@@ -1,21 +1,27 @@
 // JavaScript TicTacToe Game
 var X = x = "X", O = o = "O";
+var GO = "GAME OVER!!!";
+var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
+var i = 0;
+
 var win_patterns_for_machine = [];
 var temp = [];
 var id_cells_available_for_machine_play  = [];
 
-var x_start_patternCnt = 0;
-var x_start_pattern = [ x, o ];
+// var x_start_patternCnt = 0;
+// var x_start_pattern = [ x, o ];
+// var turns = [ x, o, x, o, x, o, x, o, x ];
 var id0, id1, id2, id3, id4, id5, id6, id7, id8;
-var board = { id0 : "",
-              id1 : "",
-              id2 : "",
-              id3 : "",
-              id4 : "",
-              id5 : "",
-              id6 : "",
-              id7 : "",
-              id8 : "" };
+var board = { 
+    id0 : "",
+    id1 : "",
+    id2 : "",
+    id3 : "",
+    id4 : "",
+    id5 : "",
+    id6 : "",
+    id7 : "",
+    id8 : "" };
 
 var tallyWinPatternsBoard = [
   { id0 : "", id1 : "", id2 : "" },
@@ -28,26 +34,58 @@ var tallyWinPatternsBoard = [
   { id2 : "", id4 : "", id6 : "" }
 ];
 
+var game_over = function(cell) {
+  winAlert.textContent = 'GAME OVER!!!!!';
+  console.log( cell );
+}
+
+var x_turn = function(cell) {
+  winAlert.textContent = '"' + cell + '"' + ', It\'s your turn!';
+  console.log( cell );
+  i++;
+}
+
+var o_turn = function(cell) {
+  winAlert.textContent = '"' + cell + '"' + ', It\'s your turn!';
+  console.log( cell );
+  i++;
+}
+
+var start_game = function(game_turns) {
+  var cell = game_turns[i];
+  if ( cell == GO ) {
+    game_over( cell );
+  } else if ( cell == x ) {
+    x_turn( cell );
+  } else if ( cell == o ) {
+    o_turn( cell );
+  }
+}
+
+start_game(game_turns);
+
 var changeCell = function(e) {
   if ( e.target.textContent != "" ) {
     alert("Box taken, pick another box.")
   } else {
     var id = e.target.id;
-    var setValue = selectCell();
+    var setValue = cell;
+    // var setValue = selectCell();
     recordCell(id, setValue);
+    recordCell(id, cell);
     e.target.textContent = board[id];
     tallyWins(id, setValue);
-    // beginPlay();
     evalTheBoard(tallyWinPatternsBoard);
+    // beginPlay();
     // console.log(board);
   }
 }
 
-var selectCell = function() {
-  var setValue = x_start_pattern[x_start_patternCnt];
-  x_start_patternCnt = (x_start_patternCnt + 1) % x_start_pattern.length;
-  return setValue;  
-}
+// var selectCell = function() {
+//   var setValue = x_start_pattern[x_start_patternCnt];
+//   x_start_patternCnt = (x_start_patternCnt + 1) % x_start_pattern.length;
+//   return setValue;  
+// }
 
 var recordCell = function(id, setValue) {
   board[id] = setValue;
@@ -86,7 +124,7 @@ var allCellsTaken = function() {
   for ( let cell in board ) {
     // console.log(cell + ':' + board[cell]);
     if ( board[cell] != "" ) {
-      winAlert.textContent = "No Available Wins";
+      
     }
   }
 }
@@ -101,16 +139,16 @@ var evalWin = function( y ) {
   }
 }
 
-  id0 = document.getElementById("id0").addEventListener( "click", changeCell );
-  id1 = document.getElementById("id1").addEventListener( "click", changeCell );
-  id2 = document.getElementById("id2").addEventListener( "click", changeCell );
-  id3 = document.getElementById("id3").addEventListener( "click", changeCell );
-  id4 = document.getElementById("id4").addEventListener( "click", changeCell );
-  id5 = document.getElementById("id5").addEventListener( "click", changeCell );
-  id6 = document.getElementById("id6").addEventListener( "click", changeCell );
-  id7 = document.getElementById("id7").addEventListener( "click", changeCell );
-  id8 = document.getElementById("id8").addEventListener( "click", changeCell );
-  winAlert = document.getElementById("winAlert");
+id0 = document.getElementById("id0").addEventListener( "click", changeCell );
+id1 = document.getElementById("id1").addEventListener( "click", changeCell );
+id2 = document.getElementById("id2").addEventListener( "click", changeCell );
+id3 = document.getElementById("id3").addEventListener( "click", changeCell );
+id4 = document.getElementById("id4").addEventListener( "click", changeCell );
+id5 = document.getElementById("id5").addEventListener( "click", changeCell );
+id6 = document.getElementById("id6").addEventListener( "click", changeCell );
+id7 = document.getElementById("id7").addEventListener( "click", changeCell );
+id8 = document.getElementById("id8").addEventListener( "click", changeCell );
+winAlert = document.getElementById("winAlert");
 
 // code below is for evaluate machine play
 
