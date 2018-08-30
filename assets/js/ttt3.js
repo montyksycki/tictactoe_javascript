@@ -3,25 +3,15 @@ var X = x = "X", O = o = "O";
 var GO = "GAME OVER!!!";
 var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
 var i = 0;
+var setValue;
+var targetID;
 
 var win_patterns_for_machine = [];
 var temp = [];
 var id_cells_available_for_machine_play  = [];
 
-// var x_start_patternCnt = 0;
-// var x_start_pattern = [ x, o ];
-// var turns = [ x, o, x, o, x, o, x, o, x ];
 var id0, id1, id2, id3, id4, id5, id6, id7, id8;
-var board = { 
-    id0 : "",
-    id1 : "",
-    id2 : "",
-    id3 : "",
-    id4 : "",
-    id5 : "",
-    id6 : "",
-    id7 : "",
-    id8 : "" };
+var board = { id0 : "", id1 : "", id2 : "", id3 : "", id4 : "", id5 : "", id6 : "", id7 : "", id8 : "" };
 
 var tallyWinPatternsBoard = [
   { id0 : "", id1 : "", id2 : "" },
@@ -39,67 +29,69 @@ var game_over = function(cell) {
   console.log( cell );
 }
 
-var x_turn = function(cell) {
-  winAlert.textContent = '"' + cell + '"' + ', It\'s your turn!';
-  console.log( cell );
+var mark = function(cell, targetID) {
+  winAlert.textContent = '"' + cell + '"' + ', It\'s your turn. Select a cell!';
+  setValue = cell;
+  recordCell(targetID, setValue);
+  // tally_game(board);
+  console.log(setValue);
+  console.log(board);
+  console.log(tallyWinPatternsBoard);
   i++;
 }
 
-var o_turn = function(cell) {
-  winAlert.textContent = '"' + cell + '"' + ', It\'s your turn!';
-  console.log( cell );
-  i++;
-}
-
-var start_game = function(game_turns) {
+var play_game = function(game_turns, targetID) {
   var cell = game_turns[i];
   if ( cell == GO ) {
     game_over( cell );
   } else if ( cell == x ) {
-    x_turn( cell );
+    mark(cell, targetID);
   } else if ( cell == o ) {
-    o_turn( cell );
+    mark(cell, targetID);
   }
 }
-
-start_game(game_turns);
 
 var changeCell = function(e) {
   if ( e.target.textContent != "" ) {
     alert("Box taken, pick another box.")
   } else {
-    var id = e.target.id;
-    var setValue = cell;
-    // var setValue = selectCell();
-    recordCell(id, setValue);
-    recordCell(id, cell);
-    e.target.textContent = board[id];
-    tallyWins(id, setValue);
-    evalTheBoard(tallyWinPatternsBoard);
-    // beginPlay();
-    // console.log(board);
+    targetID = e.target.id;
+    play_game(game_turns, targetID);
+    e.target.textContent = board[targetID];
   }
 }
 
-// var selectCell = function() {
-//   var setValue = x_start_pattern[x_start_patternCnt];
-//   x_start_patternCnt = (x_start_patternCnt + 1) % x_start_pattern.length;
-//   return setValue;  
-// }
-
-var recordCell = function(id, setValue) {
-  board[id] = setValue;
+var recordCell = function(targetID, setValue) {
+  board[targetID] = setValue;
 }
 
-var tallyWins = function(id, setValue) {
+
+var tally_game = function(board) {
+  // beginPlay();
+  tallyWins(board);
+  // evalTheBoard(tallyWinPatternsBoard);
+  // console.log(board);
+}
+
+var tallyWins = function(board) {
   for ( i = 0; i < 8; i++ ) {
     for ( var cellID in tallyWinPatternsBoard[i] ) {
-      if ( cellID == id ){
+      if ( cellID == board[targetID] ){
         tallyWinPatternsBoard[i][cellID] = setValue;
       }
     }
   }
 }
+
+// var tallyWins = function(targetID, setValue) {
+//   for ( i = 0; i < 8; i++ ) {
+//     for ( var cellID in tallyWinPatternsBoard[i] ) {
+//       if ( cellID == targetID ){
+//         tallyWinPatternsBoard[i][cellID] = setValue;
+//       }
+//     }
+//   }
+// }
 
 var evalTheBoard = function(tallyWinPatternsBoard) {
   for ( var i = 0; i < 8; i++ ) {
@@ -120,15 +112,6 @@ var changeWinCellBGColor = function(y) {
   }
 }
 
-var allCellsTaken = function() {
-  for ( let cell in board ) {
-    // console.log(cell + ':' + board[cell]);
-    if ( board[cell] != "" ) {
-      
-    }
-  }
-}
-  
 var evalWin = function( y ) {
   if ( doCellsMatch(x, y) ) {
     changeWinCellBGColor(y);
@@ -149,6 +132,10 @@ id6 = document.getElementById("id6").addEventListener( "click", changeCell );
 id7 = document.getElementById("id7").addEventListener( "click", changeCell );
 id8 = document.getElementById("id8").addEventListener( "click", changeCell );
 winAlert = document.getElementById("winAlert");
+
+
+
+
 
 // code below is for evaluate machine play
 
@@ -221,5 +208,3 @@ winAlert = document.getElementById("winAlert");
 // console.log(temp);
 // console.log(win_patterns_for_machine);
 // console.log(id_cells_available_for_machine_play);
-
-
