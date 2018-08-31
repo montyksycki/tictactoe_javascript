@@ -1,3 +1,75 @@
+
+
+var tallyWinPatternsBoard = [
+  { id0 : "", id1 : "", id2 : "" },
+  { id3 : "", id4 : "", id5 : "" },
+  { id6 : "", id7 : "", id8 : "" },
+  { id0 : "", id3 : "", id6 : "" },
+  { id1 : "", id4 : "", id7 : "" },
+  { id2 : "", id5 : "", id8 : "" },
+  { id0 : "", id4 : "", id8 : "" },
+  { id2 : "", id4 : "", id6 : "" }
+];
+
+for ( var c = 0; c < 8; c++ ) {
+  var y = Object.entries(tallyWinPatternsBoard[c]);
+  console.log(y);
+  // evalWin(y);
+}
+
+for ( var c = 0; c < 8; c++ ) {
+  var y = tallyWinPatternsBoard[c];
+  console.log(y);
+  // evalWin(y);
+}
+
+for ( i = 0; i <= 9; i++ ) {
+  console.log(board['id' + i]);
+}
+
+var board = { id0 : "O", id1 : "X", id2 : "X", id3 : "", id4 : "O", id5 : "", id6 : "", id7 : "", id8 : "" };
+for ( var tagID in board ) {
+  console.log(tagID);
+}
+
+// var id = 'id';
+// var x = 0;
+
+
+var tallyWinPatternsBoard = [
+  { id0 : "T", id1 : "", id2 : "" },
+  { id3 : "T", id4 : "", id5 : "" },
+  { id6 : "T", id7 : "", id8 : "" },
+  { id0 : "T", id3 : "", id6 : "" },
+  { id1 : "T", id4 : "", id7 : "" },
+  { id2 : "T", id5 : "", id8 : "" },
+  { id0 : "T", id4 : "", id8 : "" },
+  { id2 : "T", id4 : "", id6 : "" }
+];
+
+var board = { id0 : "O", id1 : "X", id2 : "X", id3 : "", id4 : "O", id5 : "O", id6 : "X", id7 : "", id8 : "" };
+
+var tallyWins = function() {
+  for ( i = 0; i < 8; i++ ) {
+    for ( var cellID in tallyWinPatternsBoard[i] ) {
+      for ( var tagID in board ) {
+        if ( cellID == tagID ){
+          tallyWinPatternsBoard[i][cellID] = board[tagID];
+        }
+      }
+    }
+  }
+}
+tallyWins();
+console.log(tallyWinPatternsBoard);
+
+      // for ( x = 0; x <= 9; x++ ) {
+      // }
+
+
+
+
+
 var GO = "GAME OVER!!!";
 var X = x = "X", O = o = "O";
 var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
@@ -5,20 +77,15 @@ var i = 0;
 
 var game_over = function(cell) {
   console.log( '"' + cell + '"' + ', It\'s your turn!' );
-  console.log( i );
 }
 
 var x_turn = function(cell) {
   console.log( '"' + cell + '"' + ', It\'s your turn!' );
-  console.log( i );
-  // start_game();
   i++;
 }
 
 var o_turn = function(cell) {
   console.log( '"' + cell + '"' + ', It\'s your turn!' );
-  console.log( i );
-  // start_game();
   i++;
 }
 

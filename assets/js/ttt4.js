@@ -27,58 +27,16 @@ var game_over = function(cell) {
   console.log( cell );
 }
 
-var recordCell = function(targetID, setValue) {
-  board[targetID] = setValue;
-}
-
-var mark = function(cell, targetID) {
-  winAlert.textContent = '"' + cell + '"' + ', It\'s your turn. Select a cell!';
-  var setValue = cell;
-  recordCell(targetID, setValue);
-  i++;
-}
-
-var play_game = function(game_turns, targetID) {
-  var cell = game_turns[i];
-  if ( cell == GO ) {
-    game_over( cell );
-  } else if ( cell == x ) {
-    mark(cell, targetID);
-  } else if ( cell == o ) {
-    mark(cell, targetID);
-  }
-}
-  // tally_game();
-
-var tally_game = function() {
-  // beginPlay();
-  tallyWins();
-  evalTheBoard();
-  // console.log(board);
-}
-
-var tallyWins = function() {
-  for ( i = 0; i < 8; i++ ) {
-    for ( var twpbID in tallyWinPatternsBoard[i] ) {
-      for ( var boardID in board ) {
-        if ( twpbID == boardID ){
-          tallyWinPatternsBoard[i][twpbID] = board[boardID];
-        }
-      }
-    }
+var changeWinCellBGColor = function(y) {
+  console.log( y[0][1] + ', You WIN!!! ');
+  winAlert.textContent = '"' + y[0][1] + '"' + ', You WIN!!!';
+  for ( let b = 0; b <= 2; b++ ) {
+    document.getElementById(y[b][0]).style.backgroundColor = "orange";
   }
 }
 
 var doCellsMatch = function(cell, y) {
   return y[0][1] == cell && y[1][1] == cell && y[2][1] == cell;
-}
-
-var changeWinCellBGColor = function(y) {
-  console.log( y[0][1] + ', You WIN!!! ');
-  winAlert.textContent = '"' + y[0][1] + '"' + ', You WIN!!!';
-  for ( b = 0; b <= 2; b++ ) {
-    document.getElementById(y[b][0]).style.backgroundColor = "orange";
-  }
 }
 
 var evalWin = function( y ) {
@@ -92,11 +50,64 @@ var evalWin = function( y ) {
 }
 
 var evalTheBoard = function() {
-  for ( var c = 0; c < 8; c++ ) {
-    var y = Object.entries(tallyWinPatternsBoard[c]);
+  for ( let j = 0; j < 8; j++ ) {
+    var y = Object.entries(tallyWinPatternsBoard[j]);
     evalWin(y);
   }
 }
+
+var recordCell = function(targetID, setValue) {
+  board[targetID] = setValue;
+}
+
+var tallyWins = function(targetID, setValue) {
+  for ( let c = 0; c < 8; c++ ) {
+    for ( let twpbID in tallyWinPatternsBoard[c] ) {
+      if ( twpbID == targetID ){
+        tallyWinPatternsBoard[c][twpbID] = setValue;
+      }
+    }
+  }
+}
+
+var mark = function(cell, targetID) {
+  winAlert.textContent = '"' + cell + '"' + ', It\'s your turn. Select a cell!';
+  var setValue = cell;
+  tallyWins(targetID, setValue);
+  recordCell(targetID, setValue);
+  evalTheBoard();
+  i++;
+}
+
+var play_game = function(game_turns, targetID) {
+  var cell = game_turns[i];
+  if ( cell == GO ) {
+    game_over( cell );
+  } else if ( cell == x ) {
+    mark(cell, targetID);
+  } else if ( cell == o ) {
+    mark(cell, targetID);
+  }
+}
+
+var tally_game = function() {
+  // beginPlay();
+  tallyWins(targetID, setValue);
+  evalTheBoard();
+  // console.log(board);
+}
+
+// var tallyWins = function() {
+//   for ( i = 0; i < 8; i++ ) {
+//     for ( var twpbID in tallyWinPatternsBoard[i] ) {
+//       for ( var boardID in board ) {
+//         if ( twpbID == boardID ){
+//           tallyWinPatternsBoard[i][twpbID] = board[boardID];
+//         }
+//       }
+//     }
+//   }
+// }
 
 var changeCell = function(e) {
   if ( e.target.textContent != "" ) {
