@@ -5,13 +5,14 @@ var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
 var i = 0;
 var t = 1;
 var game_won = false;
-var winText;
+var winText = '"' + game_turns[0] + '"' + ', It\'s your turn. Select a box!';
 
 var win_patterns_for_machine = [];
+var id_collect = [];
 var temp = [];
 var id_cells_available_for_machine_play = [];
 
-var id0, id1, id2, id3, id4, id5, id6, id7, id8;
+// var id0, id1, id2, id3, id4, id5, id6, id7, id8;
 var board = { id0 : "", id1 : "", id2 : "", id3 : "", id4 : "", id5 : "", id6 : "", id7 : "", id8 : "" };
 
 var tallyWinPatternsBoard = [
@@ -25,34 +26,25 @@ var tallyWinPatternsBoard = [
   { id2 : "", id4 : "", id6 : "" }
 ];
 
-winAlert.textContent = '"' + game_turns[0] + '"' + ', It\'s your turn. Select a box!';
+statusAlert.textContent = winText;
 
 // var isEven = function(number) {
 //   return (number % 2) == 0;
 // }
 
-// var count = function() {
-//   console.log(t);
-//   t++;
-//   console.log(t);
-// }
-
 var game_status_alert = function() {
   if ( game_won == true ) {
-    winAlert.textContent = winText;
+    statusAlert.textContent = winText;
   } else if ( t == 9 ) {
-    winAlert.textContent = GO;
+    statusAlert.textContent = GO;
   } else {
-    winAlert.textContent = '"' + game_turns[t] + '"' + ', It\'s your turn. Select a box!';
+    statusAlert.textContent = '"' + game_turns[t] + '"' + ', It\'s your turn. Select a box!';
     return t++;
   }
-  console.log(t);
 }
 
-// game_status_alert(t);
-
 // var game_over = function(cell) {
-//   winAlert.textContent = 'GAME OVER!!!!!';
+//   statusAlert.textContent = 'GAME OVER!!!!!';
 //   console.log( cell );
 // }
 
@@ -81,7 +73,9 @@ var evalTheBoard = function() {
   for ( let j = 0; j < 8; j++ ) {
     var y = Object.entries(tallyWinPatternsBoard[j]);
     evalWin(y);
+    evaluate_TWPB_For_Machine_Play(y);
   }
+  flatten_win_patterns();
 }
 
 var recordCell = function(targetID, setValue) {
@@ -117,13 +111,6 @@ var play_game = function(game_turns, targetID) {
   }
 }
 
-var tally_game = function() {
-  // beginPlay();
-  tallyWins(targetID, setValue);
-  evalTheBoard();
-  // console.log(board);
-}
-
 // var tallyWins = function() {
 //   for ( i = 0; i < 8; i++ ) {
 //     for ( var twpbID in tallyWinPatternsBoard[i] ) {
@@ -137,6 +124,7 @@ var tally_game = function() {
 // }
 
 var changeCell = function(e) {
+  reset();
   if ( e.target.textContent != "" ) {
     alert("Box taken, pick another box.")
   } else {
@@ -144,47 +132,91 @@ var changeCell = function(e) {
     play_game(game_turns, targetID);
     e.target.textContent = board[targetID];
     game_status_alert();
+    // beginPlay();
   }
-  // console.log(setValue);
+  console.log(i);
+  console.log(t);
   console.log(board);
   console.log(tallyWinPatternsBoard);
-  console.log(t);
+  // console.log(temp);
+  // console.log(id_cells_available_for_machine_play);
+  console.log(win_patterns_for_machine);
+  console.log(id_collect);
 }
 
-// var init_tic_tac_toe = function() {
-//   for ( let i = 0; i <= 8; i++ ) {
-//     id+i = document.getElementById("id[i]").addEventListener( "click", changeCell );
-//   }
-// }
+var init_tic_tac_toe = function() {
+  for ( let i = 0; i <= 8; i++ ) {
+    document.getElementById("id"+i).addEventListener( "click", changeCell );
+  }
+  document.getElementById("statusAlert");
+}
 
-// init_tic_tac_toe();
-
-id0 = document.getElementById("id0").addEventListener( "click", changeCell );
-id1 = document.getElementById("id1").addEventListener( "click", changeCell );
-id2 = document.getElementById("id2").addEventListener( "click", changeCell );
-id3 = document.getElementById("id3").addEventListener( "click", changeCell );
-id4 = document.getElementById("id4").addEventListener( "click", changeCell );
-id5 = document.getElementById("id5").addEventListener( "click", changeCell );
-id6 = document.getElementById("id6").addEventListener( "click", changeCell );
-id7 = document.getElementById("id7").addEventListener( "click", changeCell );
-id8 = document.getElementById("id8").addEventListener( "click", changeCell );
-winAlert = document.getElementById("winAlert");
+init_tic_tac_toe();
 
 // code below is for evaluate machine play
 
-var beginPlay = function() {
-  loop_TWPB_for_machine_play(tallyWinPatternsBoard);
-  loop_win_patterns_for_machine(win_patterns_for_machine);
-  flatten_win_patterns_to_single_array();
-  extract_cells_taken_by_machine();
+var reset = function() {
+  win_patterns_for_machine = [];
+  id_collect = [];
+  // temp = [];
 }
 
-var loop_TWPB_for_machine_play = function(tallyWinPatternsBoard) {
-  for ( let i = 0; i < tallyWinPatternsBoard.length; i++ ) {
-    var y = Object.entries(tallyWinPatternsBoard[i]);
-    evaluate_TWPB_For_Machine_Play(y);
+// var extract_cells_taken_by_machine = function() {
+//   for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+//     if ( win_patterns_for_machine[i][1] == "" ) {
+//       id_cells_available_for_machine_play.push(win_patterns_for_machine[i][0]);
+//     }
+//   }
+//   reset_win_patterns_for_machine();
+// }
+
+
+
+// var check_win_pattern_for_O = function(cell, y) {
+//   return y[0][1] == cell || y[1][1] == cell || y[2][1] == cell;
+// }
+
+// var evaluate_win_patterns_for_machine = function(y) {
+//   if ( check_win_pattern_for_O(o, y) ) {
+//     temp.push(y);
+//   }
+// }
+
+// var loop_win_patterns_for_machine = function(win_patterns_for_machine) {
+//   for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+//     var y = win_patterns_for_machine[i];
+//     evaluate_win_patterns_for_machine(y);
+//   }
+//   reset_win_patterns_for_machine();
+// }
+
+
+  
+var flatten_win_patterns = function() {
+  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+    for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
+      id_collect.push(win_patterns_for_machine[i][x][0]); 
+    }
   }
 }
+
+// var check_win_patterns_for_taken_cells = function(cell, y) {
+//   return y[0][1] != cell && y[1][1] != cell && y[2][1] != cell;
+// }
+
+// var evaluate_TWPB_For_Machine_Play = function(y) {
+//   if ( check_win_patterns_for_taken_cells(x, y) ) {
+//     win_patterns_for_machine.push(y);
+//   }
+// }
+
+// var evalTheBoard = function() {
+//   for ( let j = 0; j < 8; j++ ) {
+//     var y = Object.entries(tallyWinPatternsBoard[j]);
+//     evaluate_TWPB_For_Machine_Play(y);
+//   }
+//   flatten_win_patterns();
+// }
 
 var check_win_patterns_for_taken_cells = function(cell, y) {
   return y[0][1] != cell && y[1][1] != cell && y[2][1] != cell;
@@ -196,48 +228,9 @@ var evaluate_TWPB_For_Machine_Play = function(y) {
   }
 }
 
-var loop_win_patterns_for_machine = function(win_patterns_for_machine) {
-  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
-    var y = win_patterns_for_machine[i];
-    evaluate_win_patterns_for_machine(y);
-  }
-  reset_win_patterns_for_machine();
-}
-
-var check_win_pattern_for_O = function(cell, y) {
-  return y[0][1] == cell || y[1][1] == cell || y[2][1] == cell;
-}
-
-var evaluate_win_patterns_for_machine = function(y) {
-  if ( check_win_pattern_for_O(o, y) ) {
-    temp.push(y);
-  }
-}
-
-var reset_win_patterns_for_machine = function() {
-  win_patterns_for_machine = temp;
-  temp = [];
-}
-
-var flatten_win_patterns_to_single_array = function() {
-  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
-    for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
-      temp.push(win_patterns_for_machine[i][x]); 
-    }
-  }
-  reset_win_patterns_for_machine();
-}
-
-var extract_cells_taken_by_machine = function() {
-  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
-    if ( win_patterns_for_machine[i][1] == "" ) {
-      id_cells_available_for_machine_play.push(win_patterns_for_machine[i][0]);
-    }
-  }
-  reset_win_patterns_for_machine();
-}
-
-beginPlay();
-console.log(temp);
-console.log(win_patterns_for_machine);
-console.log(id_cells_available_for_machine_play);
+// var beginPlay = function() {
+//   // loop_TWPB_for_machine_play(tallyWinPatternsBoard);
+//   loop_win_patterns_for_machine(win_patterns_for_machine);
+//   flatten_win_patterns_to_single_array();
+//   extract_cells_taken_by_machine();
+// }

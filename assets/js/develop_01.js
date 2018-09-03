@@ -1,15 +1,172 @@
+var win_patterns_for_machine = [ [ [ 'id0', '' ], [ 'id1', '' ], [ 'id2', '' ] ],
+                                 [ [ 'id6', '' ], [ 'id7', '' ], [ 'id8', '' ] ],
+                                 [ [ 'id0', '' ], [ 'id3', '' ], [ 'id6', '' ] ],
+                                 [ [ 'id2', '' ], [ 'id5', '' ], [ 'id8', '' ] ] ];
+var id_collect = [];
+for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+  for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
+    id_collect.push(win_patterns_for_machine[i][x][0]); 
+  }
+}
+
+id_collect = id_collect.sort();
+id_collect;
+
+win_patterns_for_machine;
+// win_patterns_for_machine[0];
+// win_patterns_for_machine.length;
+// win_patterns_for_machine[0].length;
 
 
 var tallyWinPatternsBoard = [
-  { id0 : "", id1 : "", id2 : "" },
-  { id3 : "", id4 : "", id5 : "" },
-  { id6 : "", id7 : "", id8 : "" },
-  { id0 : "", id3 : "", id6 : "" },
-  { id1 : "", id4 : "", id7 : "" },
-  { id2 : "", id5 : "", id8 : "" },
-  { id0 : "", id4 : "", id8 : "" },
-  { id2 : "", id4 : "", id6 : "" }
+  {id0: "", id1: "", id2: ""},
+  {id3: "", id4: "X", id5: ""},
+  {id6: "", id7: "", id8: ""},
+  {id0: "", id3: "", id6: ""},
+  {id1: "", id4: "X", id7: ""},
+  {id2: "", id5: "", id8: ""},
+  {id0: "", id4: "X", id8: ""},
+  {id2: "", id4: "X", id6: ""}
 ];
+
+var win_patterns_for_machine = [];
+var id_collect = [];  
+var temp = [];
+
+var x = "X";
+
+var flatten_win_patterns = function() {
+  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+    for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
+      id_collect.push(win_patterns_for_machine[i][x][0]); 
+    }
+  }
+}
+
+var check_win_patterns_for_taken_cells = function(cell, y) {
+  return y[0][1] != cell && y[1][1] != cell && y[2][1] != cell;
+}
+
+var evaluate_TWPB_For_Machine_Play = function(y) {
+  if ( check_win_patterns_for_taken_cells(x, y) ) {
+    win_patterns_for_machine.push(y);
+  }
+}
+
+var evalTheBoard = function() {
+  for ( let j = 0; j < 8; j++ ) {
+    var y = Object.entries(tallyWinPatternsBoard[j]);
+    evaluate_TWPB_For_Machine_Play(y);
+  }
+  flatten_win_patterns();
+}
+
+evalTheBoard();
+id_collect;
+
+win_patterns_for_machine;
+id_collect;
+temp;
+
+
+
+
+
+
+var t = 1;
+
+var isEven = function(number) {
+  return (number % 2) == 0;
+}
+
+isEven(t);
+
+
+var isEven = function(number) {
+  return (number % 2) == 0;
+}
+
+
+
+
+var beginPlay = function() {
+  loop_TWPB_for_machine_play(tallyWinPatternsBoard);
+  loop_win_patterns_for_machine(win_patterns_for_machine);
+  flatten_win_patterns_to_single_array();
+  extract_cells_taken_by_machine();
+}
+
+var loop_TWPB_for_machine_play = function(tallyWinPatternsBoard) {
+  for ( let i = 0; i < tallyWinPatternsBoard.length; i++ ) {
+    var y = Object.entries(tallyWinPatternsBoard[i]);
+    evaluate_TWPB_For_Machine_Play(y);
+  }
+}
+
+var check_win_patterns_for_taken_cells = function(cell, y) {
+  return y[0][1] != cell && y[1][1] != cell && y[2][1] != cell;
+}
+
+var evaluate_TWPB_For_Machine_Play = function(y) {
+  if ( check_win_patterns_for_taken_cells(x, y) ) {
+    win_patterns_for_machine.push(y);
+  }
+}
+
+var loop_win_patterns_for_machine = function(win_patterns_for_machine) {
+  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+    var y = win_patterns_for_machine[i];
+    evaluate_win_patterns_for_machine(y);
+  }
+  reset_win_patterns_for_machine();
+}
+
+var check_win_pattern_for_O = function(cell, y) {
+  return y[0][1] == cell || y[1][1] == cell || y[2][1] == cell;
+}
+
+var evaluate_win_patterns_for_machine = function(y) {
+  if ( check_win_pattern_for_O(o, y) ) {
+    temp.push(y);
+  }
+}
+
+var reset_win_patterns_for_machine = function() {
+  win_patterns_for_machine = temp;
+  temp = [];
+}
+
+var flatten_win_patterns_to_single_array = function() {
+  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+    for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
+      temp.push(win_patterns_for_machine[i][x]); 
+    }
+  }
+  reset_win_patterns_for_machine();
+}
+
+var extract_cells_taken_by_machine = function() {
+  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+    if ( win_patterns_for_machine[i][1] == "" ) {
+      id_cells_available_for_machine_play.push(win_patterns_for_machine[i][0]);
+    }
+  }
+  reset_win_patterns_for_machine();
+}
+
+beginPlay();
+console.log(temp);
+console.log(win_patterns_for_machine);
+console.log(id_cells_available_for_machine_play);
+
+
+
+
+
+
+
+
+
 
 for ( var c = 0; c < 8; c++ ) {
   var y = Object.entries(tallyWinPatternsBoard[c]);
@@ -407,12 +564,12 @@ for ( var listener of setListeners ) { eval( listener ); }
 // 
 // 
 // 
-// var initBoard = function() {
-//   var setListeners = [];
-//   for ( var i = 0; i < 9; i++ ) {
-//     setListeners.push('id'+i+' = document.getElementById("id'+i+'");');
-//     setListeners.push('id'+i+'.addEventListener( "click", changeCell );');
-//   }
-//   for ( var listener of setListeners ) { eval( listener ); }
-// }();
-// initBoard();
+var initBoard = function() {
+  var setListeners = [];
+  for ( var i = 0; i < 9; i++ ) {
+    setListeners.push('id'+i+' = document.getElementById("id'+i+'");');
+    setListeners.push('id'+i+'.addEventListener( "click", changeCell );');
+  }
+  for ( var listener of setListeners ) { eval( listener ); }
+}();
+initBoard();
