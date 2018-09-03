@@ -54,6 +54,7 @@ var changeWinCellBGColor = function(y) {
   winText = '"' + y[0][1] + '"' + ', You WIN!!!';
   for ( let b = 0; b <= 2; b++ ) {
     document.getElementById(y[b][0]).style.backgroundColor = "orange";
+    document.getElementById(y[b][0]).style.color = "white";
   }
 }
 
