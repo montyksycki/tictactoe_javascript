@@ -71,13 +71,30 @@ var evalWin = function( y ) {
 }
 
 var evalTheBoard = function() {
-  for ( let j = 0; j < 8; j++ ) {
-    var y = Object.entries(tallyWinPatternsBoard[j]);
+  for ( let i = 0; i < 8; i++ ) {
+    var set = [];
+    for ( let pattern in tallyWinPatternsBoard[i] ) {
+      // let idLabel = pattern;
+      // let idStatus = tallyWinPatternsBoard[i][pattern];
+      // set.push([idLabel, idStatus]);
+      set.push([pattern, tallyWinPatternsBoard[i][pattern]]);
+    }
+    var y = set; 
     evalWin(y);
     evaluate_TWPB_For_Machine_Play(y);
   }
   flatten_win_patterns();
 }
+
+
+// var evalTheBoard = function() {
+//   for ( let j = 0; j < 8; j++ ) {
+//     var y = Object.entries(tallyWinPatternsBoard[j]);
+//     evalWin(y);
+//     evaluate_TWPB_For_Machine_Play(y);
+//   }
+//   flatten_win_patterns();
+// }
 
 var recordCell = function(targetID, setValue) {
   board[targetID] = setValue;
