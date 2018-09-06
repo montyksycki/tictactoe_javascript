@@ -30,11 +30,11 @@ var tallyWinPatternsBoard = [
 ];
 
 var win_patterns_for_machine = [];
-var id_collect = [];  
 var temp = [];
 
 var x = "X";
 
+var id_collect = [];  
 var flatten_win_patterns = function() {
   for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
     for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
@@ -62,7 +62,7 @@ var evalTheBoard = function() {
 }
 
 evalTheBoard();
-id_collect;
+id_collect = id_collect.sort();
 
 win_patterns_for_machine;
 id_collect;

@@ -1,6 +1,7 @@
 
 
 table {
+  margin: 20px auto 10px;
   text-align: center;
   border-collapse: collapse;
   height: 500px;
@@ -20,4 +21,19 @@ td {
   font-size: 8em;
   height: 33%;
   border: 1px solid black;
+}
+
+h2 {
+  padding: 10px;
+  font-size: 2em;
+  white-space: pre;
+}
+
+#reset {
+  padding: 10px 40px;
+  margin: 10px auto;
+  display: block;
+}
+
+button {
 }

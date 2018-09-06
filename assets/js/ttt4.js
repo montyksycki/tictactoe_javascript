@@ -1,11 +1,14 @@
 // JavaScript TicTacToe Game
 var x = "X", o = "O";
-var GO = "NO WINS!!! - GAME OVER!!!";
+var GO = "NO WINS!!! GAME OVER!!!";
 var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
 var i = 0;
 var t = 1;
+var q = '"';
+var ready = 'Are you ready to play?\r\n';
+var yourTurn = ', It\'s your turn. Select a box!';
 var game_won = false;
-var winText = '"' + game_turns[0] + '"' + ', It\'s your turn. Select a box!';
+var winText = ready + q + game_turns[0] + q + yourTurn;
 
 var win_patterns_for_machine = [];
 var id_collect = [];
@@ -32,13 +35,22 @@ statusAlert.textContent = winText;
 //   return (number % 2) == 0;
 // }
 
+
+var reset_game = function() {
+  window.location.reload();
+}
+
 var game_status_alert = function() {
   if ( game_won == true ) {
     statusAlert.textContent = winText;
+    statusAlert.style.backgroundColor = "rgb(40,200,40)";
+    statusAlert.style.color = "white";
   } else if ( t == 9 ) {
     statusAlert.textContent = GO;
+    statusAlert.style.backgroundColor = "red";
+    statusAlert.style.color = "white";
   } else {
-    statusAlert.textContent = '"' + game_turns[t] + '"' + ', It\'s your turn. Select a box!';
+    statusAlert.textContent = q + game_turns[t] + q + yourTurn;
     return t++;
   }
 }
@@ -74,9 +86,6 @@ var evalTheBoard = function() {
   for ( let i = 0; i < 8; i++ ) {
     var set = [];
     for ( let pattern in tallyWinPatternsBoard[i] ) {
-      // let idLabel = pattern;
-      // let idStatus = tallyWinPatternsBoard[i][pattern];
-      // set.push([idLabel, idStatus]);
       set.push([pattern, tallyWinPatternsBoard[i][pattern]]);
     }
     var y = set; 
@@ -85,7 +94,6 @@ var evalTheBoard = function() {
   }
   flatten_win_patterns();
 }
-
 
 // var evalTheBoard = function() {
 //   for ( let j = 0; j < 8; j++ ) {
@@ -167,6 +175,7 @@ var init_tic_tac_toe = function() {
     document.getElementById("id"+i).addEventListener( "click", changeCell );
   }
   document.getElementById("statusAlert");
+  document.getElementById("reset").addEventListener( "click", reset_game );
 }
 
 init_tic_tac_toe();
