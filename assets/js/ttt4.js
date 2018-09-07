@@ -5,8 +5,9 @@ var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
 var i = 0;
 var t = 1;
 var q = '"';
-var ready = 'Are you ready to play?\r\n';
-var yourTurn = ', It\'s your turn. Select a box!';
+var player = 'Player ';
+var ready = 'Are you ready to play?\r\nYou\'re player ';
+var yourTurn = ', it\'s your turn.\r\nSelect a box!';
 var game_won = false;
 var winText = ready + q + game_turns[0] + q + yourTurn;
 
@@ -17,6 +18,8 @@ var id_cells_available_for_machine_play = [];
 
 // var id0, id1, id2, id3, id4, id5, id6, id7, id8;
 var board = { id0 : "", id1 : "", id2 : "", id3 : "", id4 : "", id5 : "", id6 : "", id7 : "", id8 : "" };
+
+statusAlert.textContent = winText;
 
 var tallyWinPatternsBoard = [
   { id0 : "", id1 : "", id2 : "" },
@@ -29,12 +32,9 @@ var tallyWinPatternsBoard = [
   { id2 : "", id4 : "", id6 : "" }
 ];
 
-statusAlert.textContent = winText;
-
 // var isEven = function(number) {
 //   return (number % 2) == 0;
 // }
-
 
 var reset_game = function() {
   window.location.reload();
@@ -50,7 +50,7 @@ var game_status_alert = function() {
     statusAlert.style.backgroundColor = "red";
     statusAlert.style.color = "white";
   } else {
-    statusAlert.textContent = q + game_turns[t] + q + yourTurn;
+    statusAlert.textContent = player + q + game_turns[t] + q + yourTurn;
     return t++;
   }
 }
@@ -63,7 +63,7 @@ var game_status_alert = function() {
 var changeWinCellBGColor = function(y) {
   console.log( y[0][1] + ', You WIN!!! ' );
   game_won = true;
-  winText = '"' + y[0][1] + '"' + ', You WIN!!!';
+  winText = player + q + y[0][1] + q + ', You WIN!!!';
   for ( let b = 0; b <= 2; b++ ) {
     document.getElementById(y[b][0]).style.backgroundColor = "orange";
     document.getElementById(y[b][0]).style.color = "white";
@@ -88,13 +88,14 @@ var evalTheBoard = function() {
     for ( let pattern in tallyWinPatternsBoard[i] ) {
       set.push([pattern, tallyWinPatternsBoard[i][pattern]]);
     }
-    var y = set; 
+    var y = set;
     evalWin(y);
     evaluate_TWPB_For_Machine_Play(y);
   }
   flatten_win_patterns();
 }
 
+// This was the original function but found out that Object.entries was conflicting with older browsers.
 // var evalTheBoard = function() {
 //   for ( let j = 0; j < 8; j++ ) {
 //     var y = Object.entries(tallyWinPatternsBoard[j]);
@@ -197,8 +198,6 @@ var reset = function() {
 //   reset_win_patterns_for_machine();
 // }
 
-
-
 // var check_win_pattern_for_O = function(cell, y) {
 //   return y[0][1] == cell || y[1][1] == cell || y[2][1] == cell;
 // }
@@ -217,12 +216,10 @@ var reset = function() {
 //   reset_win_patterns_for_machine();
 // }
 
-
-  
 var flatten_win_patterns = function() {
   for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
     for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
-      id_collect.push(win_patterns_for_machine[i][x][0]); 
+      id_collect.push(win_patterns_for_machine[i][x][0]);
     }
   }
 }

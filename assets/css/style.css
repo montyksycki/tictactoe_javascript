@@ -1,5 +1,4 @@
 
-
 table {
   margin: 20px auto 10px;
   text-align: center;
@@ -17,7 +16,6 @@ td {
   color: orange;
   font: arial;
   font-weight: bold;
-  /*font-size: 1em;*/
   font-size: 8em;
   height: 33%;
   border: 1px solid black;
@@ -33,7 +31,4 @@ h2 {
   padding: 10px 40px;
   margin: 10px auto;
   display: block;
-}
-
-button {
 }
