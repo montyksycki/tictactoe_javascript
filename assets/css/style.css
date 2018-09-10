@@ -1,5 +1,11 @@
 
+h1 {
+  color: gray;
+  margin-bottom: 5px;
+}
+
 table {
+  padding-top: 5px;
   margin: 20px auto 10px;
   text-align: center;
   border-collapse: collapse;
@@ -8,7 +14,7 @@ table {
   vertical-align: middle;
   table-layout: fixed;
   empty-cells: show;
-  border: 3px solid;
+  border: 5px solid orange;
   overflow: hidden;
 }
 
@@ -18,7 +24,7 @@ td {
   font-weight: bold;
   font-size: 8em;
   height: 33%;
-  border: 1px solid black;
+  border: 1px solid orange;
 }
 
 h2 {
@@ -27,8 +33,16 @@ h2 {
   white-space: pre;
 }
 
+hr {
+  width: 500px;
+}
+
 #reset {
   padding: 10px 40px;
   margin: 10px auto;
   display: block;
+}
+
+p {
+  color: gray;
 }

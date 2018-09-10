@@ -2,6 +2,7 @@
 var x = "X", o = "O";
 var GO = "NO WINS!!! GAME OVER!!!";
 var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
+// var game_turns = [ o, x, o, x, o, x, o, x, o, GO ];
 var i = 0;
 var t = 1;
 var q = '"';
@@ -95,7 +96,7 @@ var evalTheBoard = function() {
   flatten_win_patterns();
 }
 
-// This was the original function but found out that Object.entries was conflicting with older browsers.
+// This was the original function but found out that Object.entries was conflicting with older IE browsers.
 // var evalTheBoard = function() {
 //   for ( let j = 0; j < 8; j++ ) {
 //     var y = Object.entries(tallyWinPatternsBoard[j]);
