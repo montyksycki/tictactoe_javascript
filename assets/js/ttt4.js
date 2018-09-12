@@ -1,7 +1,10 @@
 // JavaScript TicTacToe Game
 var x = "X", o = "O";
+// var x = "U+1F383", o = "U+F47B";
 var GO = "NO WINS!!! GAME OVER!!!";
 var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
+var o_play = [0,1,2,3,4,5,6,7,8];
+var p = 0;
 // var game_turns = [ o, x, o, x, o, x, o, x, o, GO ];
 var i = 0;
 var t = 1;
@@ -33,10 +36,6 @@ var tallyWinPatternsBoard = [
   { id2 : "", id4 : "", id6 : "" }
 ];
 
-// var isEven = function(number) {
-//   return (number % 2) == 0;
-// }
-
 var reset_game = function() {
   window.location.reload();
 }
@@ -55,11 +54,6 @@ var game_status_alert = function() {
     return t++;
   }
 }
-
-// var game_over = function(cell) {
-//   statusAlert.textContent = 'GAME OVER!!!!!';
-//   console.log( cell );
-// }
 
 var changeWinCellBGColor = function(y) {
   console.log( y[0][1] + ', You WIN!!! ' );
@@ -96,16 +90,6 @@ var evalTheBoard = function() {
   flatten_win_patterns();
 }
 
-// This was the original function but found out that Object.entries was conflicting with older IE browsers.
-// var evalTheBoard = function() {
-//   for ( let j = 0; j < 8; j++ ) {
-//     var y = Object.entries(tallyWinPatternsBoard[j]);
-//     evalWin(y);
-//     evaluate_TWPB_For_Machine_Play(y);
-//   }
-//   flatten_win_patterns();
-// }
-
 var recordCell = function(targetID, setValue) {
   board[targetID] = setValue;
 }
@@ -128,28 +112,28 @@ var mark = function(cell, targetID) {
   i++;
 }
 
+var mark_for_o = function(cell, o_play) {
+  // var id = "id" + o_play[p];
+  var id = "id" + 4;
+  // if ( board[id] == "" ) {
+  // }
+    board[id] = "O";
+    document.getElementById(id).textContent = board[id];
+    // board[id] = cell;
+  i++;
+}
+
 var play_game = function(game_turns, targetID) {
   var cell = game_turns[i];
   if ( cell == GO ) {
     game_over( cell );
   } else if ( cell == x ) {
     mark(cell, targetID);
+    // mark_for_o(cell, o_play);
   } else if ( cell == o ) {
     mark(cell, targetID);
   }
 }
-
-// var tallyWins = function() {
-//   for ( i = 0; i < 8; i++ ) {
-//     for ( var twpbID in tallyWinPatternsBoard[i] ) {
-//       for ( var boardID in board ) {
-//         if ( twpbID == boardID ){
-//           tallyWinPatternsBoard[i][twpbID] = board[boardID];
-//         }
-//       }
-//     }
-//   }
-// }
 
 var changeCell = function(e) {
   reset();
@@ -235,14 +219,6 @@ var flatten_win_patterns = function() {
 //   }
 // }
 
-// var evalTheBoard = function() {
-//   for ( let j = 0; j < 8; j++ ) {
-//     var y = Object.entries(tallyWinPatternsBoard[j]);
-//     evaluate_TWPB_For_Machine_Play(y);
-//   }
-//   flatten_win_patterns();
-// }
-
 var check_win_patterns_for_taken_cells = function(cell, y) {
   return y[0][1] != cell && y[1][1] != cell && y[2][1] != cell;
 }
@@ -258,4 +234,42 @@ var evaluate_TWPB_For_Machine_Play = function(y) {
 //   loop_win_patterns_for_machine(win_patterns_for_machine);
 //   flatten_win_patterns_to_single_array();
 //   extract_cells_taken_by_machine();
+// }
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// This function below was the original function but found out that
+// Object.entries was not being recognized by older browsers and
+// was throwing errors. Especially with older IE browsers.
+// 
+// var evalTheBoard = function() {
+//   for ( let j = 0; j < 8; j++ ) {
+//     var y = Object.entries(tallyWinPatternsBoard[j]);
+//     evalWin(y);
+//     evaluate_TWPB_For_Machine_Play(y);
+//   }
+//   flatten_win_patterns();
+// }
+
+// var tallyWins = function() {
+//   for ( i = 0; i < 8; i++ ) {
+//     for ( var twpbID in tallyWinPatternsBoard[i] ) {
+//       for ( var boardID in board ) {
+//         if ( twpbID == boardID ){
+//           tallyWinPatternsBoard[i][twpbID] = board[boardID];
+//         }
+//       }
+//     }
+//   }
+// }
+
+// Code below, misc functions to hang on for a bit. Delete later.
+
+// var isEven = function(number) {
+//   return (number % 2) == 0;
+// }
+
+// var game_over = function(cell) {
+//   statusAlert.textContent = 'GAME OVER!!!!!';
+//   console.log( cell );
 // }

@@ -23,6 +23,7 @@ td {
   font: arial;
   font-weight: bold;
   font-size: 8em;
+  /*font-size: 1em;*/
   height: 33%;
   border: 1px solid orange;
 }
