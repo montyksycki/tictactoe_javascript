@@ -3,11 +3,10 @@ var x = "X", o = "O";
 // var x = "U+1F383", o = "U+F47B";
 var GO = "NO WINS!!! GAME OVER!!!";
 var game_turns = [ x, o, x, o, x, o, x, o, x, GO ];
-var o_play = [0,1,2,3,4,5,6,7,8];
-var p = 0;
 // var game_turns = [ o, x, o, x, o, x, o, x, o, GO ];
-var i = 0;
-var t = 1;
+// var p = 0;
+var i = 0;  // Counter for game_turns array.
+var t = 1;  // Counter used for the statusAlert notification.
 var q = '"';
 var player = 'Player ';
 var ready = 'Are you ready to play?\r\nYou\'re player ';
@@ -19,7 +18,7 @@ var win_patterns_for_machine = [];
 var id_collect = [];
 var temp = [];
 var id_cells_available_for_machine_play = [];
-
+var out = [];
 // var id0, id1, id2, id3, id4, id5, id6, id7, id8;
 var board = { id0 : "", id1 : "", id2 : "", id3 : "", id4 : "", id5 : "", id6 : "", id7 : "", id8 : "" };
 
@@ -36,7 +35,7 @@ var tallyWinPatternsBoard = [
   { id2 : "", id4 : "", id6 : "" }
 ];
 
-var reset_game = function() {
+var reset_game_button = function() {
   window.location.reload();
 }
 
@@ -88,6 +87,7 @@ var evalTheBoard = function() {
     evaluate_TWPB_For_Machine_Play(y);
   }
   flatten_win_patterns();
+  // eval_out(out, board);
 }
 
 var recordCell = function(targetID, setValue) {
@@ -112,16 +112,25 @@ var mark = function(cell, targetID) {
   i++;
 }
 
-var mark_for_o = function(cell, o_play) {
-  // var id = "id" + o_play[p];
-  var id = "id" + 4;
-  // if ( board[id] == "" ) {
-  // }
-    board[id] = "O";
-    document.getElementById(id).textContent = board[id];
-    // board[id] = cell;
-  i++;
-}
+// var diceRoll = function(min, max) {
+//   var min = Math.ceil(min);
+//   var max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min)) + min;
+// }
+
+// roll();
+
+// var mark_for_machine = function(cell) {
+//   var roll = diceRoll(0,8);
+//   var id = "id" + roll;
+//   if ( board[id] != "" ) {
+//     diceRoll(0,8);
+//   } else {
+//     board[id] = "O";
+//     document.getElementById(id).textContent = board[id];
+//   }
+//   i++;
+// }
 
 var play_game = function(game_turns, targetID) {
   var cell = game_turns[i];
@@ -129,7 +138,7 @@ var play_game = function(game_turns, targetID) {
     game_over( cell );
   } else if ( cell == x ) {
     mark(cell, targetID);
-    // mark_for_o(cell, o_play);
+    // mark_for_machine(cell);
   } else if ( cell == o ) {
     mark(cell, targetID);
   }
@@ -144,16 +153,21 @@ var changeCell = function(e) {
     play_game(game_turns, targetID);
     e.target.textContent = board[targetID];
     game_status_alert();
+    console_log();
     // beginPlay();
   }
-  console.log(i);
-  console.log(t);
+}
+
+var console_log = function() {
+  // console.log(i);
+  // console.log(t);
   console.log(board);
   console.log(tallyWinPatternsBoard);
   // console.log(temp);
   // console.log(id_cells_available_for_machine_play);
   console.log(win_patterns_for_machine);
   console.log(id_collect);
+  console.log(out);
 }
 
 var init_tic_tac_toe = function() {
@@ -161,7 +175,7 @@ var init_tic_tac_toe = function() {
     document.getElementById("id"+i).addEventListener( "click", changeCell );
   }
   document.getElementById("statusAlert");
-  document.getElementById("reset").addEventListener( "click", reset_game );
+  document.getElementById("reset").addEventListener( "click", reset_game_button );
 }
 
 init_tic_tac_toe();
@@ -171,6 +185,7 @@ init_tic_tac_toe();
 var reset = function() {
   win_patterns_for_machine = [];
   id_collect = [];
+  out = [];
   // temp = [];
 }
 
@@ -193,6 +208,7 @@ var reset = function() {
 //   }
 // }
 
+
 // var loop_win_patterns_for_machine = function(win_patterns_for_machine) {
 //   for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
 //     var y = win_patterns_for_machine[i];
@@ -201,22 +217,50 @@ var reset = function() {
 //   reset_win_patterns_for_machine();
 // }
 
-var flatten_win_patterns = function() {
-  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
-    for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
-      id_collect.push(win_patterns_for_machine[i][x][0]);
+// +++++
+
+var eval_out = function(out, board) {
+  id_collect = [];
+  for ( let i = 0; i < out.length; i++ ) {
+    let id = out[i];
+    if ( board[id] != "O" ) {
+      id_collect.push(out[i]);
     }
   }
 }
 
-// var check_win_patterns_for_taken_cells = function(cell, y) {
-//   return y[0][1] != cell && y[1][1] != cell && y[2][1] != cell;
-// }
+var eliminate_duplicates = function(id_collect) {
+  let seen = {};
+  // let out  = [];
+  let j    = 0;
+  for ( let i = 0; i < id_collect.length; i++ ) {
+    let item = id_collect[i];
+    if ( seen[item] !== 1 ) {
+      seen[item] = 1;
+      out[j++] = item;
+    }
+  }
+  return out;
+}
 
-// var evaluate_TWPB_For_Machine_Play = function(y) {
-//   if ( check_win_patterns_for_taken_cells(x, y) ) {
-//     win_patterns_for_machine.push(y);
+var flatten_win_patterns = function() {
+  for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+    for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
+      if ( win_patterns_for_machine[i][x][1] != "O" ) {
+        id_collect.push(win_patterns_for_machine[i][x][0]);
+      }
+    }
+  }
+  eliminate_duplicates(id_collect);
+}
+
+// var flatten_win_patterns = function() {
+//   for ( let i = 0; i < win_patterns_for_machine.length; i++ ) {
+//     for ( let x = 0; x < win_patterns_for_machine[i].length; x++ ) {
+//       id_collect.push(win_patterns_for_machine[i][x][0]);
+//     }
 //   }
+//   eliminate_duplicates(id_collect);
 // }
 
 var check_win_patterns_for_taken_cells = function(cell, y) {

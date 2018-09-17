@@ -1,3 +1,26 @@
+var stuff = ["id3", "id4", "id5", "id6", "id7", "id8", "id1", "id4", "id7", "id2", "id5", "id8", "id2", "id4", "id6"];
+stuff.length;
+
+var eliminate_duplicates = function(stuff) {
+  var seen = {};
+  var out  = [];
+  var len  = stuff.length;
+  var j    = 0;
+  for ( let i = 0; i < len; i++ ) {
+    var item = stuff[i];
+    if ( seen[item] !== 1 ) {
+      seen[item] = 1;
+      out[j++] = item;
+    }
+  }
+  return out;
+}
+
+eliminate_duplicates(stuff);
+
+
+
+
 var win_patterns_for_machine = [ [ [ 'id0', '' ], [ 'id1', '' ], [ 'id2', '' ] ],
                                  [ [ 'id6', '' ], [ 'id7', '' ], [ 'id8', '' ] ],
                                  [ [ 'id0', '' ], [ 'id3', '' ], [ 'id6', '' ] ],
